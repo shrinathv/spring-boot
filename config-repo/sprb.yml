@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: sprb
+  rabbitmq:
+    addresses: ${vcap.services.${PREFIX:}rabbitmq.credentials.uri:amqp://${RABBITMQ_HOST:localhost}:${RABBITMQ_PORT:5672}}
+  
+server:
+  port: 8081
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.web: DEBUG
+
+info:
+  description: SPRB - Spring Cloud Samples
+  
+hystrix:
+  stream:
+    maxConcurrentConnections: 20
+    bus:
+      enabled: true
+           
+eureka:  
+  password: password
+  client:
+    serviceUrl:
+      defaultZone: http://user:${eureka.password}@localhost:8761/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}      
